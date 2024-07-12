@@ -6,7 +6,7 @@ namespace BloggieDemoApplication.Data
 {
     public class AuthDbContext : IdentityDbContext
     {
-        public AuthDbContext(DbContextOptions options) : base(options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
 
         }
@@ -33,8 +33,8 @@ namespace BloggieDemoApplication.Data
                 },
                 new IdentityRole 
                 {
-                    Name="admin",
-                    NormalizedName = "admin",
+                    Name="SuperAdmin",
+                    NormalizedName = "UserAdmin",
                     Id = superAdminRoleId,
                     ConcurrencyStamp = superAdminRoleId
                 },
