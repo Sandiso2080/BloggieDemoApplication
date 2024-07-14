@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,7 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                              <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Admin
                             </a>
@@ -35,9 +40,25 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="AdminBlogPosts" asp-action="List">All BlogPost</a></li>
                             </ul>
                         </li>
+                        }
+                      
+
                     </ul>
-                    <div class="d-flex">
-                        <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                    <div class="d-flex align-items-center">
+                        @if(signInManager.IsSignedIn(User))
+                        {
+                            <div class="me-3 text-light">
+                                @User?.Identity?.Name
+                            </div>
+                            <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                        }
+                        else
+                        {
+                             <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                             <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        }
+
+                       
                     </div>
                 </div>
             </div>
