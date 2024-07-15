@@ -1,4 +1,4 @@
-﻿@model BloggieDemoApplication.Models.Domain.BlogPost
+﻿@model BloggieDemoApplication.Models.ViewModels.BlogDetailsViewModel
 @{
     ViewData["Title"] = Model.PageTitle;
 }
@@ -13,6 +13,12 @@
                     <span class="text-secondary">@Model.Author</span>
                     <span class="text-secondary">@Model.PublishedDate.ToShortDateString()</span>
                 </div>
+
+                <div class="mb-3">
+                   <span>@Model.TotalLikes</span>
+                </div>
+
+
                 <div class="mb-3 flex">
                     @foreach (var tag in Model.Tags)
                     {
