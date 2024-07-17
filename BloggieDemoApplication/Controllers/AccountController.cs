@@ -22,26 +22,31 @@ namespace BloggieDemoApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-            var identityUser = new IdentityUser
-            {
-                UserName = registerViewModel.Username,
-                Email = registerViewModel.Email,
-
-
-            };
-            var identityResult = await userManager.CreateAsync(identityUser, registerViewModel.Password);
-            if (identityResult.Succeeded)
-            {
-                // assign this user the "User" role
-                var roleIdentityResult = await userManager.AddToRoleAsync(identityUser, "User");
-                if (roleIdentityResult.Succeeded)
+            if(ModelState.IsValid)
+            { 
+                var identityUser = new IdentityUser
                 {
-                    // Show success notification
-                    return RedirectToAction("Register");
-                }
+                    UserName = registerViewModel.Username,
+                    Email = registerViewModel.Email,
 
+
+                };
+                var identityResult = await userManager.CreateAsync(identityUser, registerViewModel.Password);
+                if (identityResult.Succeeded)
+                {
+                    // assign this user the "User" role
+                    var roleIdentityResult = await userManager.AddToRoleAsync(identityUser, "User");
+                    if (roleIdentityResult.Succeeded)
+                    {
+                        // Show success notification
+                        return RedirectToAction("Register");
+                    }
+
+                }
             }
-            return View("Register");
+
+          
+            return View();
         }
 
         [HttpGet]
